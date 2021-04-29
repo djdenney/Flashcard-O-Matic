@@ -14,6 +14,11 @@
       "name": "Mock Deck 3",
       "description": "asdfacbsafascv",
       "id": 3
+    },
+    {
+      "name": "Daniel",
+      "description": "65413213546251325465",
+      "id": 4
     }
   ],
   "cards": [
@@ -75,6 +80,18 @@
       "back": "ascvascva",
       "deckId": 3,
       "id": 11
+    },
+    {
+      "front": "asdfad",
+      "back": "asdfadf",
+      "deckId": 4,
+      "id": 12
+    },
+    {
+      "front": "23201321.",
+      "back": "2220000",
+      "deckId": 4,
+      "id": 13
     }
   ]
 }
