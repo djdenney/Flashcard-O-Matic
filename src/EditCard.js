@@ -22,7 +22,7 @@ function EditCard () {
     const [deck, setDeck] = useState(initialCardState)
 
     useEffect(() => {
-     async function fetchData() {
+        async function fetchData() {
             const abortController = new AbortController()
             try {
                 const cardResponse = await readCard(cardId, abortController.signal)
@@ -62,12 +62,24 @@ function EditCard () {
     return (
         <div>
             <ol className="breadcrumb">
-                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                <li className="breadcrumb-item"><Link to={`/decks/${deckId}`}>{deck.name}</Link></li>
-                <li className="breadcrumb-item active">Edit Card {cardId}</li>
+                <li className="breadcrumb-item">
+                    <Link to="/">
+                        Home
+                    </Link>
+                </li>
+                <li className="breadcrumb-item">
+                    <Link to={`/decks/${deckId}`}>
+                        {deck.name}
+                    </Link>
+                </li>
+                <li className="breadcrumb-item active">
+                    Edit Card {cardId}
+                </li>
             </ol>
             <form onSubmit={handleSubmit}>
-                <h2>Edit Card</h2>
+                <h2>
+                    Edit Card
+                </h2>
                 <div className="form-group">
                     <label>
                         Front
@@ -94,8 +106,12 @@ function EditCard () {
                         value={card.back}
                     />
                 </div>
-                <button className="btn btn-secondary mx-1" onClick={() => handleCancel()}>Cancel</button>
-                <button className="btn btn-primary mx-1" type="submit">Save</button>
+                <button className="btn btn-secondary mx-1" onClick={() => handleCancel()}>
+                    Cancel
+                </button>
+                <button className="btn btn-primary mx-1" type="submit">
+                    Save
+                </button>
             </form>
         </div>
     )

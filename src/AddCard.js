@@ -14,7 +14,7 @@ function AddCard () {
     const [deck, setDeck] = useState({})
 
     useEffect(() => {
-     async function fetchData() {
+        async function fetchData() {
             const abortController = new AbortController()
             try {
             const response = await readDeck(deckId, abortController.signal)
@@ -53,12 +53,24 @@ function AddCard () {
     return (
         <div>
             <ol className="breadcrumb">
-                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                <li className="breadcrumb-item"><Link to={`/decks/${deckId}`}>{deck.name}</Link></li>
-                <li className="breadcrumb-item active">Add Card</li>
+                <li className="breadcrumb-item">
+                    <Link to="/">
+                        Home
+                    </Link>
+                </li>
+                <li className="breadcrumb-item">
+                    <Link to={`/decks/${deckId}`}>
+                        {deck.name}
+                    </Link>
+                </li>
+                <li className="breadcrumb-item active">
+                    Add Card
+                </li>
             </ol>
             <form onSubmit={handleSubmit}>
-                <h2>{deck.name}: Add Card</h2>
+                <h2>
+                    {deck.name}: Add Card
+                </h2>
                 <div className="form-group">
                     <label>
                         Front
@@ -85,8 +97,12 @@ function AddCard () {
                         value={newCard.back}
                     />
                 </div>
-                <button className="btn btn-secondary mx-1" onClick={() => handleDone()}>Done</button>
-                <button className="btn btn-primary mx-1" type="submit">Save</button>
+                <button className="btn btn-secondary mx-1" onClick={() => handleDone()}>
+                    Done
+                </button>
+                <button className="btn btn-primary mx-1" type="submit">
+                    Save
+                </button>
             </form>
         </div>
     )

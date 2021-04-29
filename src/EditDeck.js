@@ -52,12 +52,24 @@ function EditDeck () {
     return (
         <div>
             <ol className="breadcrumb">
-                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                <li className="breadcrumb-item"><Link to={`/decks/${deckId}`}>{deck.name}</Link></li>
-                <li className="breadcrumb-item active">Edit Deck</li>
+                <li className="breadcrumb-item">
+                    <Link to="/">
+                        Home
+                    </Link>
+                </li>
+                <li className="breadcrumb-item">
+                    <Link to={`/decks/${deckId}`}>
+                        {deck.name}
+                    </Link>
+                </li>
+                <li className="breadcrumb-item active">
+                    Edit Deck
+                </li>
             </ol>
             <form onSubmit={handleSubmit}>
-                <h1>Edit Deck</h1>
+                <h1>
+                    Edit Deck
+                </h1>
                 <div className="form-group">
                     <label>
                         Name
@@ -84,8 +96,12 @@ function EditDeck () {
                         value={deck.description}
                     />
                 </div>
-                <button className="btn btn-secondary mx-1" onClick={() => handleCancel()}>Cancel</button>
-                <button className="btn btn-primary mx-1" type="submit">Submit</button>
+                <button className="btn btn-secondary mx-1" onClick={() => handleCancel()}>
+                    Cancel
+                </button>
+                <button className="btn btn-primary mx-1" type="submit">
+                    Submit
+                </button>
             </form>
         </div>
     )

@@ -33,11 +33,19 @@ function CreateDeck () {
     return (
         <div>
             <ol className="breadcrumb">
-                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                <li className="breadcrumb-item active">Create Deck</li>
+                <li className="breadcrumb-item">
+                    <Link to="/">
+                        Home
+                    </Link>
+                </li>
+                <li className="breadcrumb-item active">
+                    Create Deck
+                </li>
             </ol>
             <form onSubmit={(event) => handleSubmit(event)}>
-                <h1>Create Deck</h1>
+                <h1>
+                    Create Deck
+                </h1>
                 <div className="form-group">
                     <label>
                         Name
@@ -64,8 +72,12 @@ function CreateDeck () {
                         value={newDeck.description}
                     />
                 </div>
-                <button className="btn btn-secondary mx-1" onClick={() => handleCancel()}>Cancel</button>
-                <button className="btn btn-primary mx-1" type="submit">Submit</button>
+                <button className="btn btn-secondary mx-1" onClick={() => handleCancel()}>
+                    Cancel
+                </button>
+                <button className="btn btn-primary mx-1" type="submit">
+                    Submit
+                </button>
             </form>
         </div>
     )

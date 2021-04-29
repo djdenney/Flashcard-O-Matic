@@ -75,8 +75,14 @@ function Deck () {
         return (
             <div>
                 <ol className="breadcrumb">
-                    <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                    <li className="breadcrumb-item active">{deck.name}</li>
+                    <li className="breadcrumb-item">
+                        <Link to="/">
+                            Home
+                        </Link>
+                    </li>
+                    <li className="breadcrumb-item active">
+                        {deck.name}
+                    </li>
                 </ol>
                 <div className="card">
                     <div className="card-body">

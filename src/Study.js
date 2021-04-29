@@ -72,10 +72,10 @@ function Study () {
                                 <div className="card-text">
                                     {front ? card.front : card.back}
                                 </div>
-                                    <button onClick={flipCard} className="btn btn-secondary mx-1">
-                                        Flip
-                                    </button>
-                                    {showNextButton(cards, index)}
+                                <button onClick={flipCard} className="btn btn-secondary mx-1">
+                                    Flip
+                                </button>
+                                {showNextButton(cards, index)}
                             </div>
                         )
                     }
@@ -103,13 +103,27 @@ function Study () {
     return (
         <div>
             <ol className="breadcrumb">
-                <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-                <li className="breadcrumb-item"><Link to={`/decks/${deckId}`}>{deck.name}</Link></li>
-                <li className="breadcrumb-item active">Study</li>
+                <li className="breadcrumb-item">
+                    <Link to="/">
+                        Home
+                    </Link>
+                </li>
+                <li className="breadcrumb-item">
+                    <Link to={`/decks/${deckId}`}>
+                        {deck.name}
+                    </Link>
+                </li>
+                <li className="breadcrumb-item active">
+                    Study
+                </li>
             </ol>
             <div>
-                <h2>{`${deck.name}: Study`}</h2>
-                <div>{cards.length === 0 ? notEnoughCards() : cards.length > 2 ? enoughCards() : notEnoughCards()}</div>
+                <h2>
+                    {`${deck.name}: Study`}
+                </h2>
+                <div>
+                    {cards.length === 0 ? notEnoughCards() : cards.length > 2 ? enoughCards() : notEnoughCards()}
+                </div>
             </div>
         </div>
     )

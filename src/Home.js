@@ -54,15 +54,16 @@ function Home () {
                                 <Link className="btn btn-primary mx-1" to={`/decks/${deck.id}/study`}>
                                     Study
                                 </Link>
-                                <button type="button" className="btn btn-danger mx-1" onClick={() => handleDelete(deck)}>Delete</button>
+                                <button type="button" className="btn btn-danger mx-1" onClick={() => handleDelete(deck)}>
+                                    Delete
+                                </button>
                              </div>
                         </div>
                     )
                 })}
             </div>
         </div>
-    )
-       
+    )     
 }
 
 export default Home
