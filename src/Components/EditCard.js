@@ -1,24 +1,34 @@
 import React, { useState, useEffect } from "react"
-import { Link, useHistory, useParams } from "react-router-dom"
-import { createCard, readDeck } from "./utils/api/index"
+import { Link, useHistory, useParams} from "react-router-dom"
+import { readCard, readDeck, updateCard} from "../utils/api/index"
 
-function AddCard () {
-    const {deckId} = useParams()
+function EditCard () {
+    const { deckId, cardId } = useParams()
     const history = useHistory()
-    const initialState = {
+    const initialDeckState = {
+        id: "",
+        name: "",
+        description: ""
+    }
+    const initialCardState = {
+        id: "",
         front: "",
         back: "",
+        deckId: ""
     }
 
-    const [newCard, setNewCard] = useState(initialState)
-    const [deck, setDeck] = useState({})
+
+    const [card, setCard] = useState(initialDeckState)
+    const [deck, setDeck] = useState(initialCardState)
 
     useEffect(() => {
         async function fetchData() {
             const abortController = new AbortController()
             try {
-            const response = await readDeck(deckId, abortController.signal)
-            setDeck(response)
+                const cardResponse = await readCard(cardId, abortController.signal)
+                const deckResponse = await readDeck(deckId, abortController.signal)
+                setCard(cardResponse)
+                setDeck(deckResponse)
             } catch (error) {
                 console.error('Something went wrong', error)
             }
@@ -30,8 +40,8 @@ function AddCard () {
     }, [])
     
     function handleChange({target}) {
-        setNewCard({
-            ...newCard,
+        setCard({
+            ...card,
             [target.name]: target.value
         })
     }
@@ -39,13 +49,12 @@ function AddCard () {
     async function handleSubmit(event) {
         event.preventDefault()
         const abortController = new AbortController()
-        const response = await createCard(deckId, {...newCard}, abortController.signal)
-        history.go(0)
-        setNewCard(initialState)
+        const response = await updateCard({...card}, abortController.signal)
+        history.push(`/decks/${deckId}`)
         return response
     }
 
-    async function handleDone() {
+    async function handleCancel() {
         history.push(`/decks/${deckId}`)
     }
 
@@ -64,12 +73,12 @@ function AddCard () {
                     </Link>
                 </li>
                 <li className="breadcrumb-item active">
-                    Add Card
+                    Edit Card {cardId}
                 </li>
             </ol>
             <form onSubmit={handleSubmit}>
                 <h2>
-                    {deck.name}: Add Card
+                    Edit Card
                 </h2>
                 <div className="form-group">
                     <label>
@@ -81,7 +90,7 @@ function AddCard () {
                         className="form-control"
                         onChange={handleChange} 
                         type="text"
-                        value={newCard.front}
+                        value={card.front}
                     />
                 </div>
                 <div className="form-group">
@@ -94,11 +103,11 @@ function AddCard () {
                         className="form-control"
                         onChange={handleChange} 
                         type="text"
-                        value={newCard.back}
+                        value={card.back}
                     />
                 </div>
-                <button className="btn btn-secondary mx-1" onClick={() => handleDone()}>
-                    Done
+                <button className="btn btn-secondary mx-1" onClick={() => handleCancel()}>
+                    Cancel
                 </button>
                 <button className="btn btn-primary mx-1" type="submit">
                     Save
@@ -108,4 +117,4 @@ function AddCard () {
     )
 }
 
-export default AddCard
+export default EditCard

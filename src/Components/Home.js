@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { listDecks, deleteDeck } from "./utils/api/index"
+import { listDecks, deleteDeck } from "../utils/api/index"
 import { Link, useHistory } from "react-router-dom"
 
 function Home () {
