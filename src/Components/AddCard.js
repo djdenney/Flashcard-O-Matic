@@ -1,103 +1,97 @@
-import React, { useState, useEffect } from "react"
-import { Link, useHistory, useParams } from "react-router-dom"
-import { createCard, readDeck } from "../utils/api/index"
+import React, { useState, useEffect } from "react";
+import { Link, useHistory, useParams } from "react-router-dom";
+import { createCard, readDeck } from "../utils/api/index";
 
-function AddCard () {
-    const {deckId} = useParams()
-    const history = useHistory()
+function AddCard() {
+    const { deckId } = useParams();
+    const history = useHistory();
     const initialState = {
         front: "",
         back: "",
-    }
+    };
 
-    const [newCard, setNewCard] = useState(initialState)
-    const [deck, setDeck] = useState({})
+    const [newCard, setNewCard] = useState(initialState);
+    const [deck, setDeck] = useState({});
 
     useEffect(() => {
         async function fetchData() {
-            const abortController = new AbortController()
+            const abortController = new AbortController();
             try {
-            const response = await readDeck(deckId, abortController.signal)
-            setDeck(response)
+                const response = await readDeck(deckId, abortController.signal);
+                setDeck(response);
             } catch (error) {
-                console.error('Something went wrong', error)
+                console.error("Something went wrong", error);
             }
-            return() => {
-                abortController.abort()
-            }
+            return () => {
+                abortController.abort();
+            };
         }
-        fetchData()
-    }, [])
-    
-    function handleChange({target}) {
+        fetchData();
+    }, []);
+
+    function handleChange({ target }) {
         setNewCard({
             ...newCard,
-            [target.name]: target.value
-        })
+            [target.name]: target.value,
+        });
     }
 
     async function handleSubmit(event) {
-        event.preventDefault()
-        const abortController = new AbortController()
-        const response = await createCard(deckId, {...newCard}, abortController.signal)
-        history.go(0)
-        setNewCard(initialState)
-        return response
+        event.preventDefault();
+        const abortController = new AbortController();
+        const response = await createCard(
+            deckId,
+            { ...newCard },
+            abortController.signal
+        );
+        history.go(0);
+        setNewCard(initialState);
+        return response;
     }
 
     async function handleDone() {
-        history.push(`/decks/${deckId}`)
+        history.push(`/decks/${deckId}`);
     }
-
 
     return (
         <div>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
-                    <Link to="/">
-                        Home
-                    </Link>
+                    <Link to="/">Home</Link>
                 </li>
                 <li className="breadcrumb-item">
-                    <Link to={`/decks/${deckId}`}>
-                        {deck.name}
-                    </Link>
+                    <Link to={`/decks/${deckId}`}>{deck.name}</Link>
                 </li>
-                <li className="breadcrumb-item active">
-                    Add Card
-                </li>
+                <li className="breadcrumb-item active">Add Card</li>
             </ol>
             <form onSubmit={handleSubmit}>
-                <h2>
-                    {deck.name}: Add Card
-                </h2>
+                <h2>{deck.name}: Add Card</h2>
                 <div className="form-group">
-                    <label>
-                        Front
-                    </label>
-                    <textarea 
+                    <label>Front</label>
+                    <textarea
                         id="front"
                         name="front"
                         className="form-control"
-                        onChange={handleChange} 
+                        onChange={handleChange}
                         type="text"
                         value={newCard.front}
                     />
                 </div>
                 <div className="form-group">
-                    <label>
-                        Back
-                    </label>
-                    <textarea 
+                    <label>Back</label>
+                    <textarea
                         id="back"
                         name="back"
                         className="form-control"
-                        onChange={handleChange} 
+                        onChange={handleChange}
                         type="text"
                         value={newCard.back}
                     />
                 </div>
-                <button className="btn btn-secondary mx-1" onClick={() => handleDone()}>
+                <button
+                    className="btn btn-secondary mx-1"
+                    onClick={() => handleDone()}
+                >
                     Done
                 </button>
                 <button className="btn btn-primary mx-1" type="submit">
@@ -105,7 +99,7 @@ function AddCard () {
                 </button>
             </form>
         </div>
-    )
+    );
 }
 
-export default AddCard
+export default AddCard;

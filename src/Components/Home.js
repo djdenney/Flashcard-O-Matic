@@ -1,31 +1,35 @@
-import React, { useState, useEffect } from "react"
-import { listDecks, deleteDeck } from "../utils/api/index"
-import { Link, useHistory } from "react-router-dom"
+import React, { useState, useEffect } from "react";
+import { listDecks, deleteDeck } from "../utils/api/index";
+import { Link, useHistory } from "react-router-dom";
 
-function Home () {
-    const history = useHistory()
-    const [decks, setDecks] = useState([])
-    
-    useEffect (() => {
+function Home() {
+    const history = useHistory();
+    const [decks, setDecks] = useState([]);
+
+    useEffect(() => {
         async function fetchData() {
-            const abortController = new AbortController()
+            const abortController = new AbortController();
             try {
-                const deckResponse = await listDecks(abortController.signal)
-                setDecks(deckResponse)
+                const deckResponse = await listDecks(abortController.signal);
+                setDecks(deckResponse);
             } catch (error) {
-                console.error('Something went wrong', error)
+                console.error("Something went wrong", error);
             }
-            return() => {
-                abortController.abort()
-            }
+            return () => {
+                abortController.abort();
+            };
         }
-        fetchData()
-    }, [])
+        fetchData();
+    }, []);
 
     async function handleDelete(deck) {
-        if (window.confirm(`Delete this deck? You will not be able to recover it`)) {
-            history.go(0)
-            return await deleteDeck(deck.id)
+        if (
+            window.confirm(
+                `Delete this deck? You will not be able to recover it`
+            )
+        ) {
+            history.go(0);
+            return await deleteDeck(deck.id);
         }
     }
 
@@ -37,7 +41,11 @@ function Home () {
             <div className="card-deck">
                 {decks.map((deck) => {
                     return (
-                        <div className="card" style={{ width: '30rem'}} key={deck.id}>
+                        <div
+                            className="card"
+                            style={{ width: "30rem" }}
+                            key={deck.id}
+                        >
                             <div className="card-body">
                                 <div className="card-title">
                                     {`${deck.name}`}
@@ -48,22 +56,32 @@ function Home () {
                                 <div className="card-text">
                                     {`${deck.description}`}
                                 </div>
-                                <Link className="btn btn-secondary mx-1" to={`/decks/${deck.id}`}>
+                                <Link
+                                    className="btn btn-secondary mx-1"
+                                    to={`/decks/${deck.id}`}
+                                >
                                     View
                                 </Link>
-                                <Link className="btn btn-primary mx-1" to={`/decks/${deck.id}/study`}>
+                                <Link
+                                    className="btn btn-primary mx-1"
+                                    to={`/decks/${deck.id}/study`}
+                                >
                                     Study
                                 </Link>
-                                <button type="button" className="btn btn-danger mx-1" onClick={() => handleDelete(deck)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-danger mx-1"
+                                    onClick={() => handleDelete(deck)}
+                                >
                                     Delete
                                 </button>
-                             </div>
+                            </div>
                         </div>
-                    )
+                    );
                 })}
             </div>
         </div>
-    )     
+    );
 }
 
-export default Home
+export default Home;

@@ -1,61 +1,67 @@
-import React, { useEffect, useState } from "react"
-import { Link, useParams, useHistory } from "react-router-dom"
-import { readDeck } from "../utils/api/index"
+import React, { useEffect, useState } from "react";
+import { Link, useParams, useHistory } from "react-router-dom";
+import { readDeck } from "../utils/api/index";
 
+function Study() {
+    const { deckId } = useParams();
+    const [deck, setDeck] = useState({});
+    const [cards, setCards] = useState([]);
+    const [cardNumber, setCardNumber] = useState(1);
+    const [front, isFront] = useState(true);
+    const history = useHistory();
 
-function Study () {
-    const {deckId} = useParams()
-    const [deck, setDeck] = useState({})
-    const [cards, setCards] = useState([])
-    const [cardNumber, setCardNumber] = useState(1)
-    const [front, isFront] = useState(true)
-    const history = useHistory()
-
-    useEffect (() => {
+    useEffect(() => {
         async function fetchData() {
-            const abortController = new AbortController()
-            const response = await readDeck(deckId, abortController.signal)
-            setDeck(response)
-            setCards(response.cards)
-            return() => {
-                abortController.abort()
-            }
+            const abortController = new AbortController();
+            const response = await readDeck(deckId, abortController.signal);
+            setDeck(response);
+            setCards(response.cards);
+            return () => {
+                abortController.abort();
+            };
         }
-        fetchData()
-    }, [])
+        fetchData();
+    }, []);
 
     function nextCard(index, total) {
-        console.log(index)
+        console.log(index);
         if (index < total) {
-            setCardNumber(cardNumber + 1)
-            isFront(true)
+            setCardNumber(cardNumber + 1);
+            isFront(true);
         } else {
-            if (window.confirm(`Restart cards? Click 'cancel' to return to the home page`)) {
-                setCardNumber(1)
-                isFront(true)
+            if (
+                window.confirm(
+                    `Restart cards? Click 'cancel' to return to the home page`
+                )
+            ) {
+                setCardNumber(1);
+                isFront(true);
             } else {
-                history.push("/")
+                history.push("/");
             }
         }
     }
 
     function flipCard() {
         if (front) {
-            isFront(false)
+            isFront(false);
         } else {
-            isFront(true)
+            isFront(true);
         }
     }
 
     function showNextButton(cards, index) {
         if (front) {
-            return null
+            return null;
         } else {
             return (
-                <button onClick={() => nextCard(index + 1, cards.length)} className="btn btn-primary mx-1">
+                <button
+                    onClick={() => nextCard(index + 1, cards.length)}
+                    className="btn btn-primary mx-1"
+                >
                     Next
                 </button>
-            )
+            );
         }
     }
 
@@ -72,61 +78,62 @@ function Study () {
                                 <div className="card-text">
                                     {front ? card.front : card.back}
                                 </div>
-                                <button onClick={flipCard} className="btn btn-secondary mx-1">
+                                <button
+                                    onClick={flipCard}
+                                    className="btn btn-secondary mx-1"
+                                >
                                     Flip
                                 </button>
                                 {showNextButton(cards, index)}
                             </div>
-                        )
+                        );
                     }
                 })}
             </div>
-        )
+        );
     }
 
     function notEnoughCards() {
         return (
             <div>
-                <h2>
-                    Not enough cards.
-                </h2>
+                <h2>Not enough cards.</h2>
                 <p>
-                    You need at least 3 cards to study. There are {cards.length} cards in this deck.
+                    You need at least 3 cards to study. There are {cards.length}{" "}
+                    cards in this deck.
                 </p>
-                <Link to={`/decks/${deck.id}/cards/new`} className="btn btn-primary mx-1">
+                <Link
+                    to={`/decks/${deck.id}/cards/new`}
+                    className="btn btn-primary mx-1"
+                >
                     Add Cards
                 </Link>
             </div>
-        )
+        );
     }
 
     return (
         <div>
             <ol className="breadcrumb">
                 <li className="breadcrumb-item">
-                    <Link to="/">
-                        Home
-                    </Link>
+                    <Link to="/">Home</Link>
                 </li>
                 <li className="breadcrumb-item">
-                    <Link to={`/decks/${deckId}`}>
-                        {deck.name}
-                    </Link>
+                    <Link to={`/decks/${deckId}`}>{deck.name}</Link>
                 </li>
-                <li className="breadcrumb-item active">
-                    Study
-                </li>
+                <li className="breadcrumb-item active">Study</li>
             </ol>
             <div>
-                <h2>
-                    {`${deck.name}: Study`}
-                </h2>
+                <h2>{`${deck.name}: Study`}</h2>
                 <div>
-                    {cards.length === 0 ? notEnoughCards() : cards.length > 2 ? enoughCards() : notEnoughCards()}
+                    {cards.length === 0
+                        ? notEnoughCards()
+                        : cards.length > 2
+                        ? enoughCards()
+                        : notEnoughCards()}
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
-export default Study
+export default Study;
