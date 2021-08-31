@@ -4,3 +4,5 @@ logic.
 
 This app allows for the creation, modification and use of text flashcards to 
 aide in study.
+
+To initialize, git or download this repository, run `npm install` and then `npm start`
